@@ -1,17 +1,19 @@
 const jsonServer = require('json-server');
-const server = jsonServer.create();
+const express = require('express');
+const path = require('path');
+const server = express();
 const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
-const path = require('path'); // Add this line
 const port = process.env.PORT || 8080;
 
-// Serve static files from public directory
-server.use(express.static(path.join(__dirname, '../public'))); // Updated path
+// Serve static files from 'public' directory
+server.use(express.static(path.join(__dirname, '../public')));
 
-// API routes
-server.use('/api', router); // All API endpoints now prefixed with /api
+// JSON Server middleware
+server.use('/api', middlewares);
+server.use('/api', router);
 
-// Redirect root to index.html
+// Redirect root to frontend
 server.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
