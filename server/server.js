@@ -7,7 +7,11 @@ const middlewares = jsonServer.defaults();
 const port = process.env.PORT || 8080;
 
 // Serve static files from 'public' directory
+// Change this line:
 server.use(express.static(path.join(__dirname, '../public')));
+
+// To this (since public is now inside server):
+server.use(express.static(path.join(__dirname, 'public')));
 
 // JSON Server middleware
 server.use('/api', middlewares);
