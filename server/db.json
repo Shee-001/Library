@@ -1,0 +1,33 @@
+{
+    "books": [
+      {
+        "id": 1,
+        "title": "Art of Becoming",
+        "author": "Shee Pie",
+        "publishedYear": 2025,
+        "genre": "Classic",
+        "available": true,
+        "borrower": null,
+        "dueDate": null
+      }
+    ],
+    "users": [
+      {
+        "id": 1,
+        "name": "Kelly Blessing",
+        "email": "KellyBlessing.com",
+        "membershipId": "M01",
+        "joinedDate": "2025-03-25",
+        "phone": "+254712345678"
+      },
+      {
+        "id": 2,
+        "name": "Stacy Muthoni",
+        "email": "StacyMuthoni.com",
+        "membershipId": "M02",
+        "joinedDate": "2025-03-24",
+        "phone": "+254798765432"
+      }
+    ],
+    "transactions": []
+  }
