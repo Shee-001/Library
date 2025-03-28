@@ -4,29 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 30px;
+        }
+        .section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            flex: 1;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px;
+            margin: 5px 0;
+            background: #f5f5f5;
+            border-radius: 3px;
+        }
+        .error {
+            color: red;
+            background: #ffebeb;
+        }
+        button {
+            padding: 8px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
 </head>
 <body>
+    <h1>Library Management System</h1>
+    
     <div class="container">
-        <h1>Library Management System</h1>
-        
         <!-- Books Section -->
         <div class="section">
             <h2>Books</h2>
-            <div id="books-container">
-                <!-- Books will be loaded here by JavaScript -->
-            </div>
+            <button onclick="loadBooks()">Load Books</button>
+            <ul id="books-list">
+                <!-- Books will appear here -->
+            </ul>
+            
+            <h3>Add New Book</h3>
+            <input type="text" id="book-title" placeholder="Title">
+            <input type="text" id="book-author" placeholder="Author">
+            <button onclick="addBook()">Add Book</button>
         </div>
         
         <!-- Users Section -->
         <div class="section">
             <h2>Users</h2>
-            <div id="users-container">
-                <!-- Users will be loaded here by JavaScript -->
-            </div>
+            <button onclick="loadUsers()">Load Users</button>
+            <ul id="users-list">
+                <!-- Users will appear here -->
+            </ul>
         </div>
     </div>
 
-    <script src="index.js"></script>
+    <script>
+        // TM-Style API Functions
+        function getAPI() {
+            const API_URL = window.location.hostname === 'localhost' 
+                ? 'http://localhost:3000' 
+                : window.location.origin + '/api';
+
+            return {
+                getBooks() {
+                    return fetch(`${API_URL}/books`)
+                        .then(r => r.json())
+                        .then(books => {
+                            console.log('Books:', books);
+                            return books;
+                        });
+                },
+                getUsers() {
+                    return fetch(`${API_URL}/users`)
+                        .then(r => r.json())
+                        .then(users => {
+                            console.log('Users:', users);
+                            return users;
+                        });
+                },
+                addBook(book) {
+                    return fetch(`${API_URL}/books`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(book)
+                    }).then(r => r.json());
+                }
+            };
+        }
+
+        // UI Functions
+        function loadBooks() {
+            getAPI().getBooks()
+                .then(books => {
+                    const list = document.getElementById('books-list');
+                    list.innerHTML = books.map(book => 
+                        `<li>${book.title} by ${book.author}</li>`
+                    ).join('');
+                })
+                .catch(error => {
+                    document.getElementById('books-list').innerHTML = 
+                        `<li class="error">Error: ${error.message}</li>`;
+                });
+        }
+
+        function loadUsers() {
+            getAPI().getUsers()
+                .then(users => {
+                    const list = document.getElementById('users-list');
+                    list.innerHTML = users.map(user => 
+                        `<li>${user.name} (${user.email})</li>`
+                    ).join('');
+                })
+                .catch(error => {
+                    document.getElementById('users-list').innerHTML = 
+                        `<li class="error">Error: ${error.message}</li>`;
+                });
+        }
+
+        function addBook() {
+            const title = document.getElementById('book-title').value;
+            const author = document.getElementById('book-author').value;
+            
+            getAPI().addBook({ title, author, available: true })
+                .then(() => {
+                    loadBooks(); // Refresh the list
+                    document.getElementById('book-title').value = '';
+                    document.getElementById('book-author').value = '';
+                })
+                .catch(error => alert(`Error: ${error.message}`));
+        }
+
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBooks();
+            loadUsers();
+        });
+    </script>
 </body>
 </html>

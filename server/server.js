@@ -13,9 +13,8 @@ server.use(express.static(path.join(__dirname, '../public')));
 // To this (since public is now inside server):
 server.use(express.static(path.join(__dirname, 'public')));
 
-// JSON Server middleware
-server.use('/api', middlewares);
-server.use('/api', router);
+server.use('/api', router); // For API endpoints
+server.use(express.static('public')); // For HTML/CSS/JS
 
 // Redirect root to frontend
 server.get('/', (req, res) => {
