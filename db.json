@@ -1,33 +1,46 @@
 {
-    "books": [
-      {
-        "id": 1,
-        "title": "Art of Becoming",
-        "author": "Shee Pie",
-        "publishedYear": 2025,
-        "genre": "Classic",
-        "available": true,
-        "borrower": null,
-        "dueDate": null
-      }
-    ],
-    "users": [
-      {
-        "id": 1,
-        "name": "Kelly Blessing",
-        "email": "KellyBlessing.com",
-        "membershipId": "M01",
-        "joinedDate": "2025-03-25",
-        "phone": "+254712345678"
-      },
-      {
-        "id": 2,
-        "name": "Stacy Muthoni",
-        "email": "StacyMuthoni.com",
-        "membershipId": "M02",
-        "joinedDate": "2025-03-24",
-        "phone": "+254798765432"
-      }
-    ],
-    "transactions": []
-  }
+  "books": [
+    {
+      "id": "1",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "publishedYear": 1960,
+      "genre": "Fiction",
+      "available": true,
+      "borrower": null,
+      "dueDate": null
+    },
+    {
+      "id": "2",
+      "title": "1984",
+      "author": "George Orwell",
+      "publishedYear": 1949,
+      "genre": "Dystopian",
+      "available": false,
+      "borrower": "USER001",
+      "dueDate": "2025-04-15"
+    },
+    {
+      "id": "0139",
+      "title": "ddfg",
+      "author": "sfdg",
+      "publishedYear": 344,
+      "genre": "fiction",
+      "available": true,
+      "borrower": null,
+      "dueDate": null
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "membershipId": "USER001"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "membershipId": "USER002"
+    }
+  ]
+}
